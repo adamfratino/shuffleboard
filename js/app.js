@@ -3,25 +3,33 @@
 document.addEventListener('DOMContentLoaded', () => {
   const biscuits = document.querySelectorAll('.biscuit');
   const svg = document.querySelector('.shuffleboard');
+  const resetButton = document.querySelector('.reset-button');
   const point = svg.createSVGPoint();
+  let ctm = svg.getScreenCTM().inverse();
 
   function moveBiscuit(e) {
-    point.x = e.clientX;
-    point.y = e.clientY;
+    point.x = e.center.x;
+    point.y = e.center.y;
 
-    const ctm = e.target.getScreenCTM().inverse();
     const {x, y} = point.matrixTransform(ctm);
     e.target.setAttribute('cx', x);
     e.target.setAttribute('cy', y);
   }
 
   [...biscuits].forEach(biscuit => {
-    biscuit.addEventListener('mousedown', function(e) {
-      this.addEventListener('mousemove', moveBiscuit);
-    });
+    const hammer = new Hammer(biscuit);
+    hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+    hammer.on('pan', moveBiscuit);
   });
 
-  document.addEventListener('mouseup', function(e) {
-    [...biscuits].forEach(b => b.removeEventListener('mousemove', moveBiscuit))
+  resetButton.addEventListener('click', () => {
+    [...biscuits].forEach((b, i) => {
+      b.setAttribute('cx', 100 * i + 100);
+      b.setAttribute('cy', 1400);
+    });
+  })
+
+  window.addEventListener('resize', () => {
+    ctm = svg.getScreenCTM().inverse();
   });
 });
