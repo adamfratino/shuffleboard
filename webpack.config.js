@@ -24,13 +24,24 @@ const config = {
 };
 
 if (process.env.NODE_ENV === 'development') {
-  config.plugins = [...config.plugins, new webpack.HotModuleReplacementPlugin()];
+  config.plugins = [
+    ...config.plugins,
+    new webpack.HotModuleReplacementPlugin(),
+  ];
+
   config.devtool = 'eval-source-map';
   config.devServer = {
     hot: true,
     contentBase: path.resolve(__dirname, 'static'),
     port: 8000,
   };
+}
+
+if (process.env.NODE_ENV === 'production') {
+  config.plugins = [
+    ...config.plugins,
+    // new webpack.optimize.UglifyJsPlugin(),
+  ];
 }
 
 module.exports = config
