@@ -1,0 +1,26 @@
+html, body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+svg.shuffleboard {
+  display: block;
+  margin: 0 auto;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.biscuit {
+  width: 35px;
+  stroke-width: 10;
+  stroke: black;
+}
+
+.biscuit.yellow {
+  fill: #cccc00;
+}
