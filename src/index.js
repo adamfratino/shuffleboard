@@ -1,4 +1,4 @@
-'use strict';
+import Hammer from 'hammerjs';
 
 document.addEventListener('DOMContentLoaded', () => {
   const biscuits = document.querySelectorAll('.biscuit');
