@@ -2,16 +2,40 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+function requiredEnvVar(key) {
+  const envVar = process.env[key];
+
+  if (!envVar) {
+    throw new Error(`Missing required env var ${key}`);
+  }
+
+  return envVar;
+}
+
 const config = {
   entry: path.resolve(__dirname, 'src/index.js'),
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, requiredEnvVar('BUILD_DIR')),
   },
   resolve: {
     modules: [
       path.resolve(__dirname, 'node_modules'),
       path.resolve(__dirname, 'src'),
+    ],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: path.resolve(__dirname, 'node_modules'),
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env'],
+          },
+        },
+      },
     ],
   },
   plugins: [
@@ -40,7 +64,7 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'production') {
   config.plugins = [
     ...config.plugins,
-    // new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
   ];
 }
 
