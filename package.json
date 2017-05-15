@@ -4,7 +4,7 @@
   "description": "Bang tangs and slide biscuits",
   "main": "app.js",
   "scripts": {
-    "build": "mkdir -p gh-pages/css; cp -r static/css/ gh-pages/css; NODE_ENV=production BUILD_DIR=gh-pages webpack",
+    "build": "mkdir -p dist/css; cp -r static/css/ dist/css; NODE_ENV=production BUILD_DIR=dist webpack",
     "serve": "NODE_ENV=development webpack-dev-server"
   },
   "repository": {
