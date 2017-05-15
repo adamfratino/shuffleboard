@@ -4,8 +4,9 @@
   "description": "Bang tangs and slide biscuits",
   "main": "app.js",
   "scripts": {
-    "build": "mkdir -p dist/css; cp -r static/css/ dist/css; NODE_ENV=production BUILD_DIR=dist webpack",
-    "serve": "NODE_ENV=development webpack-dev-server"
+    "build": "mkdir -p dist/css; cp -r static/css/ dist/css && NODE_ENV=production BUILD_DIR=dist webpack",
+    "serve": "NODE_ENV=development BUILD_DIR=dist webpack-dev-server",
+    "deploy": "npm run build && cd dist && git add . && git commit -m \"Release $(date)\" && git push"
   },
   "repository": {
     "type": "git",

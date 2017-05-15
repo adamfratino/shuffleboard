@@ -18,16 +18,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   [...biscuits].forEach(biscuit => {
     const hammer = new Hammer(biscuit);
-    hammer.get('pan').set({ direction: Hammer.DIRECTION_ALL });
+    hammer.get('pan').set({direction: Hammer.DIRECTION_ALL});
     hammer.on('pan', moveBiscuit);
   });
 
-  resetButton.addEventListener('click', () => {
-    [...biscuits].forEach((b, i) => {
-      b.setAttribute('cx', 100 * i + 100);
-      b.setAttribute('cy', 1400);
+  function setBiscuits() {
+    const svgWidth = svg.viewBox.baseVal.width;
+
+    [...biscuits].forEach((b, i, arr) => {
+      const radius = parseInt(b.getAttribute('r'), 10);
+      const paddedDiam = radius * 2 + 20;
+      const half = arr.length / 2;
+
+      if (i < half) {
+        b.setAttribute('cx', paddedDiam * i);
+      } else {
+        b.setAttribute('cx', svgWidth - (i - half) * paddedDiam);
+      }
+
+      b.setAttribute('cy', 1800);
     });
-  })
+  }
+
+  setBiscuits();
+
+  resetButton.addEventListener('click', setBiscuits);
 
   window.addEventListener('resize', () => {
     ctm = svg.getScreenCTM().inverse();
