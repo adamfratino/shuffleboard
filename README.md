@@ -1,4 +1,4 @@
-# Shuffleboard
+# DEPRECATED - NEW VERSION CURRENTLY BEING BUILT PRIVATE
 
 ### Get started
 1. Have a somewhat recent version of node/npm installed
